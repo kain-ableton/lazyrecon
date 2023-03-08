@@ -5,6 +5,8 @@
 python >= 3.7
 pip3 >= 19.0
 go >= 1.17
+curl
+wget
 ```
 ### CI/CD way
 You can use stateful/stateless build agent (worker). There is no additional time is required for provisioning.
