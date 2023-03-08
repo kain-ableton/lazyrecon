@@ -39,7 +39,7 @@ export GO111MODULE=on
 ```
 2. Enable new environment `source ./lazyconfig`
 3. Call `sudo -E ./install.sh`
-4. Execute `sudo -E ./lazyrecon.sh "hackerone.com"`
+4. Execute `sudo -E ./lazyrecon.sh "hackerone.com" --wildcard`
 
 
 # About
