@@ -10,30 +10,32 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   MACOS="1"
 fi
 
-# sqlmap and linkfinder needs
-if ! /usr/bin/env python -h; then
-    sudo ln -s /usr/bin/python3 /usr/bin/python
-fi
+# sqlmap and linkfinder needs change python to python3
+# mac m1 issue
+# if ! /usr/bin/env python -h; then
+#     sudo ln -s /usr/local/bin/python3 /usr/bin/python
+# fi
 
 # CI/CD dependencies
 third_party_go_dependencies(){
     # Third-party tools
-    gotools[0]="go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder"
-    gotools[1]="go install -v github.com/projectdiscovery/interactsh/cmd/interactsh-client@latest"
-    gotools[2]="go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest"
-    gotools[3]="go get -v github.com/projectdiscovery/mapcidr/cmd/mapcidr"
-    gotools[4]="go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest"
-    gotools[5]="go get -v github.com/projectdiscovery/dnsx/cmd/dnsx"
-    gotools[6]="go get -v github.com/tomnomnom/assetfinder"
-    gotools[7]="go get -v github.com/tomnomnom/waybackurls"
-    gotools[8]="go get -v github.com/tomnomnom/qsreplace"
-    gotools[9]="go get -v github.com/tomnomnom/unfurl"
-    gotools[10]="go get -u github.com/tomnomnom/gf"
-    gotools[11]="go get -u github.com/jaeles-project/gospider"
-    gotools[12]="go get -u -v github.com/lc/gau"
-    gotools[13]="go get github.com/detectify/page-fetch"
-    gotools[14]="go get github.com/d3mondev/puredns/v2"
-    gotools[15]="go get -u github.com/sensepost/gowitness"
+    gotools[0]="go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest"
+    gotools[1]="go install github.com/projectdiscovery/interactsh/cmd/interactsh-client@latest"
+    gotools[2]="go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest"
+    gotools[3]="go install github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest"
+    gotools[4]="go install github.com/projectdiscovery/httpx/cmd/httpx@latest"
+    gotools[5]="go install github.com/projectdiscovery/dnsx/cmd/dnsx@latest"
+    gotools[6]="go install github.com/tomnomnom/assetfinder@latest"
+    gotools[7]="go install github.com/tomnomnom/waybackurls@latest"
+    gotools[8]="go install github.com/tomnomnom/qsreplace@latest"
+    gotools[9]="go install github.com/tomnomnom/unfurl@latest"
+    gotools[10]="go install github.com/tomnomnom/gf@latest"
+    gotools[11]="go install github.com/jaeles-project/gospider@latest"
+    gotools[12]="go install github.com/lc/gau@latest"
+    gotools[13]="go install github.com/detectify/page-fetch@latest"
+    gotools[14]="go install github.com/d3mondev/puredns/v2@latest"
+    gotools[15]="go install github.com/sensepost/gowitness@latest"
+    gotools[16]="go install github.com/projectdiscovery/naabu/v2/cmd/naabu@latest"
 
     for gotool in "${gotools[@]}"; do
         $gotool
@@ -67,7 +69,8 @@ custom_origin_dependencies() {
         ln -s $PWD/Bug-Bounty-Toolz/ssrf.py /usr/local/bin/ssrf-headers-tool
     fi
 
-    if wget -nc -O $PWD/wordlist/storenth-lfi.yaml https://raw.githubusercontent.com/storenth/nuclei-templates/master/vulnerabilities/other/storenth-lfi.yaml; then
+    if wget -nc https://raw.githubusercontent.com/storenth/nuclei-templates/master/vulnerabilities/other/storenth-lfi.yaml; then
+        mv -f $PWD/storenth-lfi.yaml $PWD/wordlist/storenth-lfi.yaml
     else exit 1
     fi
 
@@ -126,7 +129,7 @@ third_party_dependencies(){
     fi
 
     if ! type sqlmap; then
-        git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
+        git clone --depth 1 https://github.com/storenth/sqlmap.git sqlmap-dev
         ln -s $PWD/sqlmap-dev/sqlmap.py /usr/local/bin/sqlmap
     fi
 
@@ -159,10 +162,10 @@ chromium_dependencies(){
             if [[ -n "$MACOS" ]]; then
                 # mac development https://github.com/storenth/chromium-latest-linux
                 ./install-update-mac.sh
-                ln -s $PWD/latest/Chromium.app/Contents/MacOS/Chromium /usr/local/bin/chromium
+                # ln -s $PWD/latest/Chromium.app/Contents/MacOS/Chromium /usr/local/bin/chromium
             else
                 ./update.sh
-                ln -s $PWD/latest/chrome /usr/local/bin/chromium
+                # ln -s $PWD/latest/chrome /usr/local/bin/chromium
             fi
             cd -
         fi
