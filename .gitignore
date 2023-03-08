@@ -25,6 +25,17 @@ lazyWordLists/all.txt
 gitTokenFile
 paused.conf
 hydra/
+masscan/
+massdns/
+github-search/
+gfpatterns/
+dnsgen/
+SecretFinder/
+LinkFinder/
+Interlace/
+Bug-Bounty-Toolz/
+getsecrets/
+sqlmap-dev/
 twitter_friends.txt
 lazyrecon_test_brute.sh
 index.html
