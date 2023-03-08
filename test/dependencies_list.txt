@@ -7,6 +7,7 @@ ssrf-headers-tool
 subfinder
 interactsh-client
 nuclei
+naabu
 mapcidr
 httpx
 dnsx
